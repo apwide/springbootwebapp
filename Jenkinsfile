@@ -8,7 +8,7 @@ pipeline {
                 script {
                     echo "Hello EveryBody"
                     jira {
-
+                        jiraVersion = "7.13.2"
                     }
                 }
             }
