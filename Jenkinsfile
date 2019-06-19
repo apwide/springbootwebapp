@@ -1,4 +1,4 @@
-@Library("jenkins-jira-sharedlib@master") _
+@Library('jenkins-jira-sharedlib@master') _
 
 pipeline {
     agent any
@@ -6,14 +6,15 @@ pipeline {
         JIRA_CREDENTIALS = credentials('localhost-jira-admin')
     }
     stages {
-        stage("Hello world") {
+        stage('Hello world') {
             steps {
                 script {
-                    echo "Hello EveryBody"
+                    echo 'Hello EveryBody'
                     jira {
                         jiraBuildFailOnError = false
                         jiraCredentialsId = 'localhost-jira-admin'
-                        jiraVersion = "7.13.2"
+                        jiraVersion = '7.13.2'
+                        jiraUrl = 'http://192.168.0.6:8080'
                     }
                 }
             }
