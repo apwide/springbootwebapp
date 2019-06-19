@@ -13,7 +13,6 @@ pipeline {
                     jira {
                         jiraCredentialsId = 'localhost-jira-admin'
                         jiraVersion = "7.13.2"
-                        jiraFailedOnError = false
                     }
                 }
             }
