@@ -1,3 +1,5 @@
+@Library("jenkins-jira-sharedlib@master") _
+
 pipeline {
     agent any
     stages {
@@ -5,6 +7,9 @@ pipeline {
             steps {
                 script {
                     echo "Hello EveryBody"
+                    jira {
+
+                    }
                 }
             }
         }
