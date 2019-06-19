@@ -10,12 +10,9 @@ pipeline {
             steps {
                 script {
                     echo "Hello EveryBody"
-                    jiraCredentials = credentials('localhost-jira-admin')
                     jira {
+                        jiraCredentialsId = 'localhost-jira-admin'
                         jiraVersion = "7.13.2"
-                        jiraCredentials = JIRA_CREDENTIALS
-                        jiraUser = JIRA_CREDENTIALS_USR
-                        jiraPassword = JIRA_CREDENTIALS_PSW
                     }
                 }
             }
