@@ -16,7 +16,7 @@ pipeline {
                         jiraUrl = 'http://192.168.0.6:8080'
                     ]
                     jira {
-                        config = jiraConfig
+                        config : jiraConfig
 //                        jiraCredentialsId = 'localhost-jira-admin'
 //                        jiraVersion = '7.13.2'
 //                        jiraUrl = 'http://192.168.0.6:8080'
