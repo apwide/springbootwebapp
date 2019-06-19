@@ -11,6 +11,7 @@ pipeline {
                 script {
                     echo "Hello EveryBody"
                     jira {
+                        jiraBuildFailOnError = false
                         jiraCredentialsId = 'localhost-jira-admin'
                         jiraVersion = "7.13.2"
                     }
