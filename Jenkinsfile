@@ -1,4 +1,6 @@
 @Library('jenkins-jira-sharedlib@master') _
+@Library('jenkins-jira-sharedlib@master')
+import static com.apwide.jira.util.Utilities.jiraInstance
 
 pipeline {
     agent any
