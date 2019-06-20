@@ -35,6 +35,8 @@ pipeline {
 
                     echo project.toString()
 
+                    echo "${currentBuild.number}"
+
                     def createdVersion = jiraCreateVersion {
                         body = [
                                 description: 'An excellent version',
