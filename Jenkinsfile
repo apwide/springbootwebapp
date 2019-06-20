@@ -21,6 +21,7 @@ pipeline {
 
 //                    echo jiraConfig.url
                     def projects = jira jiraConfig, 'GET', '/rest/api/2/project'
+                    echo projects.getClass()
                     echo JsonOutput.toJson(projects as Map)
 
                     currentBuild.result = hudson.model.Result.SUCCESS
