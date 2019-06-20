@@ -23,7 +23,7 @@ pipeline {
                     def projects = jira httpMode: 'GET', path: '/rest/api/2/project'
                     echo projects.toString()
 
-                    def projects2 = jira() {
+                    def projects2 = jira(null) {
                         httpMode = 'GET'
                         path = '/rest/api/2/project'
                     }
