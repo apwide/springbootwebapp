@@ -51,7 +51,7 @@ pipeline {
                         id = "${createdVersion.id}"
                         body = [
                                 description: 'An excellent version',
-                                name       : "Pipeline Version ${currentBuild.number} - 2",
+                                name       : "Pipeline Version ${currentBuild.number} - Yahou",
                                 project    : 'BUBU'
                         ]
                     }
