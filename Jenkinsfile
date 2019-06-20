@@ -55,6 +55,8 @@ pipeline {
                                 project    : 'BUBU'
                         ]
                     }
+
+                    echo updatedVersion.toString()
                 }
             }
         }
