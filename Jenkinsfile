@@ -1,5 +1,7 @@
 @Library('jenkins-jira-sharedlib@master') _
 
+import groovy.json.JsonOutput
+
 pipeline {
     agent any
     environment {
