@@ -1,4 +1,4 @@
-@Library('jenkins-jira-sharedlib@master') _
+//@Library('jenkins-jira-sharedlib@master') _
 @Library('jenkins-jira-sharedlib@master')
 import static com.apwide.jira.util.Utilities.*
 
@@ -19,8 +19,9 @@ pipeline {
                         version '8.0.2'
                     }
 
-                    def projects = jira jiraConfig, 'GET', '/rest/api/2/project'
-                    echo projects
+                    echo jiraConfig
+//                    def projects = jira jiraConfig, 'GET', '/rest/api/2/project'
+//                    echo projects
 
                     currentBuilder.result = hudson.model.Result.SUCCESS
                 }
