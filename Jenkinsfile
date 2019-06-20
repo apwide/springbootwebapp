@@ -19,7 +19,7 @@ pipeline {
 
 //                    echo jiraConfig.url
                     def projects = jira jiraConfig, 'GET', '/rest/api/2/project'
-                    echo projects
+                    echo projects as String
 
                     currentBuild.result = hudson.model.Result.SUCCESS
                 }
