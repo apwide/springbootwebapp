@@ -9,18 +9,17 @@ pipeline {
         stage('Hello world') {
             steps {
                 script {
-                    echo 'Hello EveryBody'
-                    def jiraConfig = [
-                        jiraCredentialsId = 'localhost-jira-admin',
-                        jiraVersion = '7.13.2',
-                        jiraUrl = 'http://192.168.0.6:8080'
-                    ]
-                    jira {
-                        config : jiraConfig
-//                        jiraCredentialsId = 'localhost-jira-admin'
-//                        jiraVersion = '7.13.2'
-//                        jiraUrl = 'http://192.168.0.6:8080'
+                    echo 'Defining Jira configuration'
+
+                    def jiraConfig = jiraInstance {
+                        url 'http://192.168.0.6:8080'
+                        credentialsId 'jenkins-jira-admin'
+                        version '8.0.2'
                     }
+
+                    def projects = jira jiraConfig, 'GET', '/rest/api/2/project'
+                    echo projects
+
                     currentBuilder.result = hudson.model.Result.SUCCESS
                 }
             }
