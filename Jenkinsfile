@@ -21,7 +21,7 @@ pipeline {
                     def projects = jira jiraConfig, 'GET', '/rest/api/2/project'
                     echo projects.toString()
 
-                    currentBuild.result = hudson.model.Result.SUCCESS
+//                    currentBuild.result = hudson.model.Result.SUCCESS
                 }
             }
         }
