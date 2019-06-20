@@ -46,6 +46,15 @@ pipeline {
                     }
 
                     echo createdVersion.toString()
+
+                    def updatedVersion = jiraUpdateVersion {
+                        id = 10207
+                        body = [
+                                description: 'An excellent version',
+                                name       : "Pipeline Version ${currentBuild.number}",
+                                project    : 'BUBU'
+                        ]
+                    }
                 }
             }
         }
