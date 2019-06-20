@@ -13,7 +13,7 @@ pipeline {
 
                     def jiraConfig = [
                         url: 'http://192.168.0.6:8080',
-                        credentialsId: 'jenkins-jira-admin',
+                        credentialsId: 'localhost-jira-admin',
                         version: '8.0.2'
                     ]
 
