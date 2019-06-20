@@ -27,7 +27,7 @@ pipeline {
 
                     echo projects2.toString()
 
-                    def project = jiraGetProject(JIRA_CONFIG) {
+                    def project = jiraGetProject {
                         id = '10000'
                     }
 
