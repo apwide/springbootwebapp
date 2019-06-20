@@ -1,7 +1,5 @@
 @Library('jenkins-jira-sharedlib@master') _
 
-import groovy.json.JsonOutput
-
 pipeline {
     agent any
     environment {
@@ -21,8 +19,7 @@ pipeline {
 
 //                    echo jiraConfig.url
                     def projects = jira jiraConfig, 'GET', '/rest/api/2/project'
-                    echo projects.getClass().getName()
-                    echo JsonOutput.toJson(projects as Map)
+                    echo projects.toString()
 
                     currentBuild.result = hudson.model.Result.SUCCESS
                 }
