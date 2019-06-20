@@ -48,10 +48,10 @@ pipeline {
                     echo createdVersion.toString()
 
                     def updatedVersion = jiraUpdateVersion {
-                        id = '10207'
+                        id = "${createdVersion.id}"
                         body = [
                                 description: 'An excellent version',
-                                name       : "Pipeline Version ${currentBuild.number}",
+                                name       : "Pipeline Version ${currentBuild.number} - 2",
                                 project    : 'BUBU'
                         ]
                     }
