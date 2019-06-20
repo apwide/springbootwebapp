@@ -33,7 +33,7 @@ pipeline {
 //                    echo jiraConfig.url
 //                    def projects = jiraFunction('GET', '/rest/api/2/project')
 //                    def projects = jira httpMode: 'GET', path: '/rest/api/2/project'
-                    def projects = jiraClosure JIRA_CONFIG {
+                    def projects = jiraClosure(JIRA_CONFIG) {
                         httpMode = 'GET'
                         path = '/rest/api/2/project'
                     }
