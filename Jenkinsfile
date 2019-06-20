@@ -17,11 +17,11 @@ pipeline {
                         version: '8.0.2'
                     ]
 
-                    echo jiraConfig.url
-//                    def projects = jira jiraConfig, 'GET', '/rest/api/2/project'
-//                    echo projects
+//                    echo jiraConfig.url
+                    def projects = jira jiraConfig, 'GET', '/rest/api/2/project'
+                    echo projects
 
-                    currentBuilder.result = hudson.model.Result.SUCCESS
+                    currentBuild.result = hudson.model.Result.SUCCESS
                 }
             }
         }
