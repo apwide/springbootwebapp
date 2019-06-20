@@ -17,7 +17,7 @@ pipeline {
                         version: '8.0.2'
                     ]
 
-                    echo jiraConfig
+                    echo jiraConfig.url
 //                    def projects = jira jiraConfig, 'GET', '/rest/api/2/project'
 //                    echo projects
 
