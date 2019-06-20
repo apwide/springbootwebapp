@@ -1,3 +1,5 @@
+import java.time.LocalDate
+
 @Library('jenkins-jira-sharedlib@master') _
 
 pipeline {
@@ -36,7 +38,7 @@ pipeline {
                     def createdVersion = jiraCreateVersion {
                         body = [
                                 description: 'An excellent version',
-                                name       : "Pipeline Version ${new Date().getTime()}",
+                                name       : "Pipeline Version ${currentBuild.number}",
                                 project    : 'BUBU'
                         ]
                     }
