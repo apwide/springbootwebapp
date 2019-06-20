@@ -15,9 +15,9 @@ pipeline {
                     echo 'Defining Jira configuration'
 
                     def JIRA_CONFIG = [
-                            baseUrl: 'http://192.168.0.6:8080',
+                            baseUrl      : 'http://192.168.0.6:8080',
                             credentialsId: 'localhost-jira-admin',
-                            version: '8.0.2'
+                            version      : '8.0.2'
                     ]
 
                     def projects2 = jira {
@@ -32,6 +32,16 @@ pipeline {
                     }
 
                     echo project.toString()
+
+                    def createdVersion = jiraCreateVersion {
+                        body = [
+                                description: 'An excellent version',
+                                name       : "Pipeline Version ${new Date().getTime()}",
+                                project    : 'BUBU'
+                        ]
+                    }
+
+                    echo createdVersion.toString()
                 }
             }
         }
