@@ -20,13 +20,11 @@ pipeline {
                             version: '8.0.2'
                     ]
 
-                    def projects = jira httpMode: 'GET', path: '/rest/api/2/project'
-                    echo projects.toString()
-
-                    def projects2 = jira() {
+                    def projects2 = jira {
                         httpMode = 'GET'
                         path = '/rest/api/2/project'
                     }
+
                     echo projects2.toString()
 
                     def project = jiraGetProject(JIRA_CONFIG) {
