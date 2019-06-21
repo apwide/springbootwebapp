@@ -37,34 +37,34 @@ pipeline {
             def project = jira httpMode: 'GET', path: '/rest/api/2/project/1000'
             echo project.toString()
 
-            environment {
-                APW_CATEGORY = 'Dev'
-                APW_ENVIRONMENT_ID = '6'
-                SERVER_PORT = 8089
-                ENV_OS = 'Windows'
-                ENV_OWNER = 'info@apwide.com'
-                ENV_DATABASE = 'Oracle'
-            }
-            steps {
-                apwStatusChanged status:'Deploy'
-
-                withEnv(['JENKINS_NODE_COOKIE=dontKill']) {
-                    sh "nohup java -jar -Dserver.port=${env.SERVER_PORT} target/*.jar &"
-                }
-                sh "sleep ${env.SLEEP_TIME}"
-
-                apwEnvironmentUpdated body:[
-                        url: "http://192.168.0.6:${env.SERVER_PORT}",
-                        attributes: [
-                                OS: env.ENV_OS,
-                                Owner: env.ENV_OWNER,
-                                Database: env.ENV_DATABASE
-                        ]
-                ]
-
-                apwDeployedVersion version:env.VERSION
-                apwStatusChanged status:'Up'
-            }
+//            environment {
+//                APW_CATEGORY = 'Dev'
+//                APW_ENVIRONMENT_ID = '6'
+//                SERVER_PORT = 8089
+//                ENV_OS = 'Windows'
+//                ENV_OWNER = 'info@apwide.com'
+//                ENV_DATABASE = 'Oracle'
+//            }
+//            steps {
+//                apwStatusChanged status:'Deploy'
+//
+//                withEnv(['JENKINS_NODE_COOKIE=dontKill']) {
+//                    sh "nohup java -jar -Dserver.port=${env.SERVER_PORT} target/*.jar &"
+//                }
+//                sh "sleep ${env.SLEEP_TIME}"
+//
+//                apwEnvironmentUpdated body:[
+//                        url: "http://192.168.0.6:${env.SERVER_PORT}",
+//                        attributes: [
+//                                OS: env.ENV_OS,
+//                                Owner: env.ENV_OWNER,
+//                                Database: env.ENV_DATABASE
+//                        ]
+//                ]
+//
+//                apwDeployedVersion version:env.VERSION
+//                apwStatusChanged status:'Up'
+//            }
         }
         stage('Release') {
             when {
