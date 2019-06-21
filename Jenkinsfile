@@ -42,12 +42,12 @@ pipeline {
                 ENV_DATABASE = 'Oracle'
             }
             steps {
+                apwStatusChanged {
+                    application = env.APPLICATION
+                    category = env.ENVIRONMENT
+                    status = 'Deploy'
+                }
                 script {
-                    apwStatusChanged {
-                        application = env.APPLICATION
-                        category = env.ENVIRONMENT
-                        status = 'Deploy'
-                    }
 
                     sh "nohup java -jar -Dserver.port=${env.SERVER_PORT} *.jar > run-jar.out 2> run-jar.err < /dev/null &"
                     sh "sleep ${env.SLEEP_TIME}"
