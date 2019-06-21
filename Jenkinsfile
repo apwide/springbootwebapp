@@ -44,7 +44,7 @@ pipeline {
             steps {
                 apwStatusChanged status:'Deploy'
 
-                withEnv(['BUILD_ID=dontKill']) {
+                withEnv(['JENKINS_NODE_COOKIE=dontKill']) {
                     sh "nohup java -jar -Dserver.port=${env.SERVER_PORT} target/*.jar &"
                 }
                 sh "sleep ${env.SLEEP_TIME}"
@@ -52,7 +52,7 @@ pipeline {
                 apwEnvironmentUpdated body:[
                         url: "http://192.168.0.6:${env.SERVER_PORT}",
                         attributes: [
-                                OS: env.ENV_OS,
+                                OS: env.ENV_OS,k
                                 Owner: env.ENV_OWNER,
                                 Database: env.ENV_DATABASE
                         ]
@@ -86,7 +86,7 @@ pipeline {
             steps {
                 apwStatusChanged status:'Deploy'
 
-                withEnv(['BUILD_ID=dontKill']) {
+                withEnv(['JENKINS_NODE_COOKIE=dontKill']) {
                     sh "nohup java -jar -Dserver.port=${env.SERVER_PORT} target/*.jar &"
                 }
                 sh "sleep ${env.SLEEP_TIME}"
