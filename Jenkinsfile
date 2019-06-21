@@ -77,7 +77,7 @@ pipeline {
                         status = 'Up'
                     }
                 }
-k            }
+            }
         }
         stage('Release') {
             when {
