@@ -11,6 +11,7 @@ pipeline {
         JIRA_VERSION = '8.0.2'
         SLEEP_TIME = '5s'
         APPLICATION = 'eCommerce'
+        VERSION = readMavenPom().getVersion()
     }
     parameters {
         booleanParam(name: 'RELEASE', defaultValue: false, description: 'Should a release be created and published ?')
@@ -42,8 +43,6 @@ pipeline {
             }
             steps {
                 script {
-                    def pom = readMavenPom
-
                     apwStatusChanged {
                         application = env.APPLICATION
                         category = env.ENVIRONMENT
@@ -68,7 +67,7 @@ pipeline {
                     apwDeployedVersion {
                         application = env.APPLICATION
                         category = env.ENVIRONMENT
-                        version = pom.version
+                        version = env.VERSION
                     }
 
                     apwStatusChanged {
@@ -103,8 +102,6 @@ pipeline {
             steps {
 
                 script {
-                    def pom = readMavenPom
-
                     apwStatusChanged {
                         application = env.APPLICATION
                         category = env.ENVIRONMENT
@@ -129,7 +126,7 @@ pipeline {
                     apwDeployedVersion {
                         application = env.APPLICATION
                         category = env.ENVIRONMENT
-                        version = currentBuild.number
+                        version = env.VERSION
                     }
 
                     apwStatusChanged {
