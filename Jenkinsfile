@@ -3,18 +3,15 @@
 pipeline {
     agent any
     environment {
-        JIRA_CREDENTIALS = credentials('localhost-jira-admin')
-        JIRA_BASE_URL = 'http://192.168.0.6:8080'
-        JIRA_CREDENTIALS_ID = 'localhost-jira-admin'
-        JIRA_VERSION = '8.0.2'
+//        JIRA_BASE_URL = 'http://192.168.0.6:8080'
+//        JIRA_CREDENTIALS_ID = 'localhost-jira-admin'
+//        APW_UNAVAILABLE_STATUS = 'Down'
+//        APW_AVAILABLE_STATUS = 'Up'
         SLEEP_TIME = '5s'
         APW_APPLICATION = 'eCommerce'
-        APW_UNAVAILABLE_STATUS = 'Down'
-        APW_AVAILABLE_STATUS = 'Up'
         VERSION = readMavenPom().getVersion()
     }
     parameters {
-        booleanParam(name: 'RELEASE', defaultValue: false, description: 'Should a release be created and published ?')
         choice(name: 'PROMOTE_TO_ENV', choices: ['Dev', 'Demo'], description: 'Should the output be promoted to an environment ?')
     }
     tools {
@@ -69,15 +66,6 @@ pipeline {
 
                 apwSetDeployedVersion version:env.VERSION
                 apwChangeStatus status:'Up'
-            }
-        }
-        stage('Release') {
-            when {
-                expression { return params.RELEASE }
-            }
-            steps {
-                sh 'mvn release:prepare'
-                sh 'mvn release:perform'
             }
         }
         stage('Deploy on Demo') {
