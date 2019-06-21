@@ -44,7 +44,7 @@ pipeline {
             steps {
                 apwStatusChanged status:'Deploy'
 
-                sh "nohup java -jar -Dserver.port=${env.SERVER_PORT} *.jar > run-jar.out 2> run-jar.err < /dev/null &"
+                sh "nohup java -jar -Dserver.port=${env.SERVER_PORT} target/*.jar > run-jar.out 2> run-jar.err < /dev/null &"
                 sh "sleep ${env.SLEEP_TIME}"
 
                 apwEnvironmentUpdated body:[
@@ -84,7 +84,7 @@ pipeline {
             steps {
                 apwStatusChanged status:'Deploy'
 
-                sh "nohup java -jar -Dserver.port=${env.SERVER_PORT} *.jar > run-jar.out 2> run-jar.err < /dev/null &"
+                sh "nohup java -jar -Dserver.port=${env.SERVER_PORT} target/*.jar > run-jar.out 2> run-jar.err < /dev/null &"
                 sh "sleep ${env.SLEEP_TIME}"
 
                 apwEnvironmentUpdated body:[
