@@ -48,7 +48,7 @@ pipeline {
                 sh "sleep ${env.SLEEP_TIME}"
 
                 apwEnvironmentUpdated body:[
-                        url: "'http://192.168.0.6:${env.SERVER_PORT}",
+                        url: "http://192.168.0.6:${env.SERVER_PORT}",
                         attributes: [
                                 OS: env.ENV_OS,
                                 Owner: env.ENV_OWNER,
@@ -88,7 +88,7 @@ pipeline {
                 sh "sleep ${env.SLEEP_TIME}"
 
                 apwEnvironmentUpdated body:[
-                        url: "'http://192.168.0.6:${env.SERVER_PORT}",
+                        url: "http://192.168.0.6:${env.SERVER_PORT}",
                         attributes: [
                                 OS: env.ENV_OS,
                                 Owner: env.ENV_OWNER,
