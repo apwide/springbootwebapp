@@ -42,8 +42,10 @@ pipeline {
                 ENV_DATABASE = 'Oracle'
             }
             steps {
-                def project = jira httpMode: 'GET', path: '/rest/api/2/project/1000'
-                echo project.toString()
+                script {
+                    def project = jira httpMode: 'GET', path: '/rest/api/2/project/1000'
+                    echo project.toString()
+                }
 
 //                apwStatusChanged status:'Deploy'
 //
