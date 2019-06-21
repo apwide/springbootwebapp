@@ -22,13 +22,13 @@ pipeline {
         jdk 'jdk8'
     }
     stages {
-//        stage('Build & Test') {
-//            steps {
-//                script {
-//                    sh 'mvn clean install'
-//                }
-//            }
-//        }
+        stage('Build & Test') {
+            steps {
+                script {
+                    sh 'mvn clean install'
+                }
+            }
+        }
         stage('Deploy on Dev') {
             when {
                 equals expected: 'Dev', actual: params.PROMOTE_TO_ENV
@@ -47,24 +47,24 @@ pipeline {
                     echo project.toString()
                 }
 
-//                apwStatusChanged status:'Deploy'
-//
-//                withEnv(['JENKINS_NODE_COOKIE=dontKill']) {
-//                    sh "nohup java -jar -Dserver.port=${env.SERVER_PORT} target/*.jar &"
-//                }
-//                sh "sleep ${env.SLEEP_TIME}"
-//
-//                apwEnvironmentUpdated body:[
-//                        url: "http://192.168.0.6:${env.SERVER_PORT}",
-//                        attributes: [
-//                                OS: env.ENV_OS,
-//                                Owner: env.ENV_OWNER,
-//                                Database: env.ENV_DATABASE
-//                        ]
-//                ]
-//
-//                apwDeployedVersion version:env.VERSION
-//                apwStatusChanged status:'Up'
+                apwStatusChanged status:'Deploy'
+
+                withEnv(['JENKINS_NODE_COOKIE=dontKill']) {
+                    sh "nohup java -jar -Dserver.port=${env.SERVER_PORT} target/*.jar &"
+                }
+                sh "sleep ${env.SLEEP_TIME}"
+
+                apwEnvironmentUpdated body:[
+                        url: "http://192.168.0.6:${env.SERVER_PORT}",
+                        attributes: [
+                                OS: env.ENV_OS,
+                                Owner: env.ENV_OWNER,
+                                Database: env.ENV_DATABASE
+                        ]
+                ]
+
+                apwDeployedVersion version:env.VERSION
+                apwStatusChanged status:'Up'
             }
         }
         stage('Release') {
@@ -109,58 +109,5 @@ pipeline {
                 apwStatusChanged status:'Up'
             }
         }
-//        stage('Hello world') {
-//            steps {
-//                script {
-//                    sh 'mvn --version'
-//
-//                    sh 'mvn clean install'
-//
-//                    echo 'Defining Jira configuration'
-//
-//                    def JIRA_CONFIG = [
-//                            baseUrl      : 'http://192.168.0.6:8080',
-//                            credentialsId: 'localhost-jira-admin',
-//                            version      : '8.0.2'
-//                    ]
-//
-//                    def projects2 = jira {
-//                        httpMode = 'GET'
-//                        path = '/rest/api/2/project'
-//                    }
-//
-//                    echo projects2.toString()
-//
-//                    def project = jiraGetProject {
-//                        id = '10000'
-//                    }
-//
-//                    echo project.toString()
-//
-//                    echo "${currentBuild.number}"
-//
-//                    def createdVersion = jiraCreateVersion {
-//                        body = [
-//                                description: 'An excellent version',
-//                                name       : "Pipeline Version ${currentBuild.number}",
-//                                project    : 'BUBU'
-//                        ]
-//                    }
-//
-//                    echo createdVersion.toString()
-//
-//                    def updatedVersion = jiraUpdateVersion {
-//                        id = "${createdVersion.id}"
-//                        body = [
-//                                description: 'An excellent version',
-//                                name       : "Pipeline Version ${currentBuild.number} - Yahou",
-//                                project    : 'BUBU'
-//                        ]
-//                    }
-//
-//                    echo updatedVersion.toString()
-//                }
-//            }
-//        }
     }
 }
