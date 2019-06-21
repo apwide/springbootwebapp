@@ -33,20 +33,18 @@ pipeline {
             when {
                 equals expected: 'Dev', actual: params.PROMOTE_TO_ENV
             }
-            script {
+            environment {
+                APW_CATEGORY = 'Dev'
+                APW_ENVIRONMENT_ID = '6'
+                SERVER_PORT = 8089
+                ENV_OS = 'Windows'
+                ENV_OWNER = 'info@apwide.com'
+                ENV_DATABASE = 'Oracle'
+            }
+            steps {
                 def project = jira httpMode: 'GET', path: '/rest/api/2/project/1000'
                 echo project.toString()
-            }
 
-//            environment {
-//                APW_CATEGORY = 'Dev'
-//                APW_ENVIRONMENT_ID = '6'
-//                SERVER_PORT = 8089
-//                ENV_OS = 'Windows'
-//                ENV_OWNER = 'info@apwide.com'
-//                ENV_DATABASE = 'Oracle'
-//            }
-//            steps {
 //                apwStatusChanged status:'Deploy'
 //
 //                withEnv(['JENKINS_NODE_COOKIE=dontKill']) {
@@ -65,7 +63,7 @@ pipeline {
 //
 //                apwDeployedVersion version:env.VERSION
 //                apwStatusChanged status:'Up'
-//            }
+            }
         }
         stage('Release') {
             when {
