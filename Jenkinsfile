@@ -43,7 +43,7 @@ pipeline {
             }
             steps {
                 script {
-                    def project = jira httpMode: 'GET', path: '/rest/api/2/project/1000'
+                    def project = jira httpMode: 'GET', path: '/rest/api/2/project/10000'
                     echo project.toString()
                 }
 
