@@ -1,5 +1,3 @@
-import java.time.LocalDate
-
 @Library('jenkins-jira-sharedlib@master') _
 
 pipeline {
