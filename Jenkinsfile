@@ -10,10 +10,18 @@ pipeline {
         JIRA_CREDENTIALS_ID = 'localhost-jira-admin'
         JIRA_VERSION = '8.0.2'
     }
+    tools {
+        maven 'mvn3'
+        jdk 'jdk8'
+    }
     stages {
         stage('Hello world') {
             steps {
                 script {
+                    sh 'mvn --version'
+
+                    sh 'mvn clean install'
+                    
                     echo 'Defining Jira configuration'
 
                     def JIRA_CONFIG = [
