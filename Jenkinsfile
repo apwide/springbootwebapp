@@ -10,7 +10,7 @@ pipeline {
         JIRA_CREDENTIALS_ID = 'localhost-jira-admin'
         JIRA_VERSION = '8.0.2'
         SLEEP_TIME = '5s'
-        APPLICATION = 'eCommerce'
+        APW_APPLICATION = 'eCommerce'
         VERSION = readMavenPom().getVersion()
     }
     parameters {
@@ -34,20 +34,20 @@ pipeline {
                 equals expected: 'Dev', actual: params.PROMOTE_TO_ENV
             }
             environment {
-                ENVIRONMENT = 'Dev'
-                ENVIRONMENT_GOLIVE_ID = '6'
+                APW_CATEGORY = 'Dev'
+                APW_ENVIRONMENT_ID = '6'
                 SERVER_PORT = 8089
                 ENV_OS = 'Windows'
                 ENV_OWNER = 'info@apwide.com'
                 ENV_DATABASE = 'Oracle'
             }
             steps {
-                apwStatusChanged application:env.APPLICATION, category:env.ENVIRONMENT, status:'Deploy'
+                apwStatusChanged status:'Deploy'
 
                 sh "nohup java -jar -Dserver.port=${env.SERVER_PORT} *.jar > run-jar.out 2> run-jar.err < /dev/null &"
                 sh "sleep ${env.SLEEP_TIME}"
 
-                apwEnvironmentUpdated id:env.ENVIRONMENT_GOLIVE_ID, body:[
+                apwEnvironmentUpdated body:[
                         url: "'http://192.168.0.6:${env.SERVER_PORT}",
                         attributes: [
                                 OS: env.ENV_OS,
@@ -56,8 +56,8 @@ pipeline {
                         ]
                 ]
 
-                apwDeployedVersion application:env.APPLICATION, category:env.ENVIRONMENT, version:env.VERSION
-                apwStatusChanged application:env.APPLICATION, category:env.ENVIRONMENT, status:'Up'
+                apwDeployedVersion version:env.VERSION
+                apwStatusChanged status:'Up'
             }
         }
         stage('Release') {
@@ -74,20 +74,20 @@ pipeline {
                 equals expected: 'Demo', actual: params.PROMOTE_TO_ENV
             }
             environment {
-                ENVIRONMENT = 'Demo'
-                ENVIRONMENT_GOLIVE_ID = '7'
+                APW_CATEGORY = 'Demo'
+                APW_ENVIRONMENT_ID = '7'
                 SERVER_PORT = 8090
                 ENV_OS = 'Ubuntu'
                 ENV_OWNER = 'support@apwide.com'
                 ENV_DATABASE = 'Oracle'
             }
             steps {
-                apwStatusChanged application:env.APPLICATION, category:env.ENVIRONMENT, status:'Deploy'
+                apwStatusChanged status:'Deploy'
 
                 sh "nohup java -jar -Dserver.port=${env.SERVER_PORT} *.jar > run-jar.out 2> run-jar.err < /dev/null &"
                 sh "sleep ${env.SLEEP_TIME}"
 
-                apwEnvironmentUpdated id:env.ENVIRONMENT_GOLIVE_ID, body:[
+                apwEnvironmentUpdated body:[
                         url: "'http://192.168.0.6:${env.SERVER_PORT}",
                         attributes: [
                                 OS: env.ENV_OS,
@@ -96,8 +96,8 @@ pipeline {
                         ]
                 ]
 
-                apwDeployedVersion application:env.APPLICATION, category:env.ENVIRONMENT, version:env.VERSION
-                apwStatusChanged application:env.APPLICATION, category:env.ENVIRONMENT, status:'Up'
+                apwDeployedVersion version:env.VERSION
+                apwStatusChanged status:'Up'
             }
         }
 //        stage('Hello world') {
