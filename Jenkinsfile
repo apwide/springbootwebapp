@@ -52,7 +52,7 @@ pipeline {
                 apwEnvironmentUpdated body:[
                         url: "http://192.168.0.6:${env.SERVER_PORT}",
                         attributes: [
-                                OS: env.ENV_OS,k
+                                OS: env.ENV_OS,
                                 Owner: env.ENV_OWNER,
                                 Database: env.ENV_DATABASE
                         ]
