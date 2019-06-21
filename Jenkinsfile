@@ -41,7 +41,9 @@ pipeline {
                 ENV_DATABASE = 'Oracle'
             }
             steps {
-                def pom = readMavenPom
+                script {
+                    def pom = readMavenPom
+                }
 
                 apwStatusChanged {
                     application = env.APPLICATION
@@ -100,6 +102,10 @@ pipeline {
                 ENV_DATABASE = 'Oracle'
             }
             steps {
+
+                script {
+                    def pom = readMavenPom
+                }
 
                 apwStatusChanged {
                     application = env.APPLICATION
