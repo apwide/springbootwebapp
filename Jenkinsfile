@@ -42,12 +42,12 @@ pipeline {
                 ENV_DATABASE = 'Oracle'
             }
             steps {
-                apwStatusChanged application:env.APPLICATION, category = env.ENVIRONMENT, status = 'Deploy'
+                apwStatusChanged application:env.APPLICATION, category:env.ENVIRONMENT, status:'Deploy'
 
                 sh "nohup java -jar -Dserver.port=${env.SERVER_PORT} *.jar > run-jar.out 2> run-jar.err < /dev/null &"
                 sh "sleep ${env.SLEEP_TIME}"
 
-                apwEnvironmentUpdated id:env.ENVIRONMENT_GOLIVE_ID, body = [
+                apwEnvironmentUpdated id:env.ENVIRONMENT_GOLIVE_ID, body:[
                         url: "'http://192.168.0.6:${env.SERVER_PORT}",
                         attributes: [
                                 OS: env.ENV_OS,
@@ -82,12 +82,12 @@ pipeline {
                 ENV_DATABASE = 'Oracle'
             }
             steps {
-                apwStatusChanged application:env.APPLICATION, category = env.ENVIRONMENT, status = 'Deploy'
+                apwStatusChanged application:env.APPLICATION, category:env.ENVIRONMENT, status:'Deploy'
 
                 sh "nohup java -jar -Dserver.port=${env.SERVER_PORT} *.jar > run-jar.out 2> run-jar.err < /dev/null &"
                 sh "sleep ${env.SLEEP_TIME}"
 
-                apwEnvironmentUpdated id:env.ENVIRONMENT_GOLIVE_ID, body = [
+                apwEnvironmentUpdated id:env.ENVIRONMENT_GOLIVE_ID, body:[
                         url: "'http://192.168.0.6:${env.SERVER_PORT}",
                         attributes: [
                                 OS: env.ENV_OS,
