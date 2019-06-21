@@ -9,6 +9,8 @@ pipeline {
         JIRA_VERSION = '8.0.2'
         SLEEP_TIME = '5s'
         APW_APPLICATION = 'eCommerce'
+        APW_UNAVAILABLE_STATUS = 'Down'
+        APW_AVAILABLE_STATUS = 'Up'
         VERSION = readMavenPom().getVersion()
     }
     parameters {
@@ -40,6 +42,10 @@ pipeline {
                 ENV_DATABASE = 'Oracle'
             }
             steps {
+                apwCheckEnvironmentStatus check: {
+                    sh 'timeout 5 wget --retry-connrefused --tries=5 --waitretry=1 -q http://192.168.0.6:8180 -O /dev/null'
+                }
+
                 script {
                     def project = jira httpMode: 'GET', path: '/rest/api/2/project/10000'
                     echo project.toString()
