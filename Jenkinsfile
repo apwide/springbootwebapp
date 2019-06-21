@@ -33,9 +33,10 @@ pipeline {
             when {
                 equals expected: 'Dev', actual: params.PROMOTE_TO_ENV
             }
-
-            def project = jira httpMode: 'GET', path: '/rest/api/2/project/1000'
-            echo project.toString()
+            script {
+                def project = jira httpMode: 'GET', path: '/rest/api/2/project/1000'
+                echo project.toString()
+            }
 
 //            environment {
 //                APW_CATEGORY = 'Dev'
