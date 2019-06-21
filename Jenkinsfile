@@ -22,13 +22,13 @@ pipeline {
         jdk 'jdk8'
     }
     stages {
-        stage('Build & Test') {
-            steps {
-                script {
-                    sh 'mvn clean install'
-                }
-            }
-        }
+//        stage('Build & Test') {
+//            steps {
+//                script {
+//                    sh 'mvn clean install'
+//                }
+//            }
+//        }
         stage('Deploy on Dev') {
             when {
                 equals expected: 'Dev', actual: params.PROMOTE_TO_ENV
