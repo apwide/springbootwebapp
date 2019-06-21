@@ -43,42 +43,41 @@ pipeline {
             steps {
                 script {
                     def pom = readMavenPom
-                }
 
-                apwStatusChanged {
-                    application = env.APPLICATION
-                    category = env.ENVIRONMENT
-                    status = 'Deploy'
-                }
+                    apwStatusChanged {
+                        application = env.APPLICATION
+                        category = env.ENVIRONMENT
+                        status = 'Deploy'
+                    }
 
-                sh "nohup java -jar -Dserver.port=${env.SERVER_PORT} *.jar > run-jar.out 2> run-jar.err < /dev/null &"
-                sh "sleep ${env.SLEEP_TIME}"
+                    sh "nohup java -jar -Dserver.port=${env.SERVER_PORT} *.jar > run-jar.out 2> run-jar.err < /dev/null &"
+                    sh "sleep ${env.SLEEP_TIME}"
 
-                apwEnvironmentUpdated {
-                    id = env.ENVIRONMENT_GOLIVE_ID
-                    body = [
-                        url: "'http://192.168.0.6:${env.SERVER_PORT}",
-                        attributes: [
-                                OS: env.ENV_OS,
-                                Owner: env.ENV_OWNER,
-                                Database: env.ENV_DATABASE
+                    apwEnvironmentUpdated {
+                        id = env.ENVIRONMENT_GOLIVE_ID
+                        body = [
+                                url: "'http://192.168.0.6:${env.SERVER_PORT}",
+                                attributes: [
+                                        OS: env.ENV_OS,
+                                        Owner: env.ENV_OWNER,
+                                        Database: env.ENV_DATABASE
+                                ]
                         ]
-                    ]
-                }
+                    }
 
-                apwDeployedVersion {
-                    application = env.APPLICATION
-                    category = env.ENVIRONMENT
-                    version = pom.version
-                }
+                    apwDeployedVersion {
+                        application = env.APPLICATION
+                        category = env.ENVIRONMENT
+                        version = pom.version
+                    }
 
-                apwStatusChanged {
-                    application = env.APPLICATION
-                    category = env.ENVIRONMENT
-                    status = 'Up'
+                    apwStatusChanged {
+                        application = env.APPLICATION
+                        category = env.ENVIRONMENT
+                        status = 'Up'
+                    }
                 }
-
-            }
+k            }
         }
         stage('Release') {
             when {
@@ -105,39 +104,39 @@ pipeline {
 
                 script {
                     def pom = readMavenPom
-                }
 
-                apwStatusChanged {
-                    application = env.APPLICATION
-                    category = env.ENVIRONMENT
-                    status = 'Deploy'
-                }
+                    apwStatusChanged {
+                        application = env.APPLICATION
+                        category = env.ENVIRONMENT
+                        status = 'Deploy'
+                    }
 
-                sh "nohup java -jar -Dserver.port=${env.SERVER_PORT} *.jar > run-jar.out 2> run-jar.err < /dev/null &"
-                sh "sleep ${env.SLEEP_TIME}"
+                    sh "nohup java -jar -Dserver.port=${env.SERVER_PORT} *.jar > run-jar.out 2> run-jar.err < /dev/null &"
+                    sh "sleep ${env.SLEEP_TIME}"
 
-                apwEnvironmentUpdated {
-                    id = env.ENVIRONMENT_GOLIVE_ID
-                    body = [
-                            url: "'http://192.168.0.6:${env.SERVER_PORT}",
-                            attributes: [
-                                    OS: env.ENV_OS,
-                                    Owner: env.ENV_OWNER,
-                                    Database: env.ENV_DATABASE
-                            ]
-                    ]
-                }
+                    apwEnvironmentUpdated {
+                        id = env.ENVIRONMENT_GOLIVE_ID
+                        body = [
+                                url: "'http://192.168.0.6:${env.SERVER_PORT}",
+                                attributes: [
+                                        OS: env.ENV_OS,
+                                        Owner: env.ENV_OWNER,
+                                        Database: env.ENV_DATABASE
+                                ]
+                        ]
+                    }
 
-                apwDeployedVersion {
-                    application = env.APPLICATION
-                    category = env.ENVIRONMENT
-                    version = currentBuild.number
-                }
+                    apwDeployedVersion {
+                        application = env.APPLICATION
+                        category = env.ENVIRONMENT
+                        version = currentBuild.number
+                    }
 
-                apwStatusChanged {
-                    application = env.APPLICATION
-                    category = env.ENVIRONMENT
-                    status = 'Up'
+                    apwStatusChanged {
+                        application = env.APPLICATION
+                        category = env.ENVIRONMENT
+                        status = 'Up'
+                    }
                 }
             }
         }
