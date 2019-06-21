@@ -1,4 +1,4 @@
-@Library('jenkins-jira-sharedlib@master') _
+@Library('jira-jenkins-shared-lib') _
 
 pipeline {
     agent any
@@ -51,14 +51,14 @@ pipeline {
                     echo project.toString()
                 }
 
-                apwStatusChanged status:'Deploy'
+                apwChangeStatus status:'Deploy'
 
                 withEnv(['JENKINS_NODE_COOKIE=dontKill']) {
                     sh "nohup java -jar -Dserver.port=${env.SERVER_PORT} target/*.jar &"
                 }
                 sh "sleep ${env.SLEEP_TIME}"
 
-                apwEnvironmentUpdated body:[
+                apwUpdateEnvironment body:[
                         url: "http://192.168.0.6:${env.SERVER_PORT}",
                         attributes: [
                                 OS: env.ENV_OS,
@@ -67,8 +67,8 @@ pipeline {
                         ]
                 ]
 
-                apwDeployedVersion version:env.VERSION
-                apwStatusChanged status:'Up'
+                apwSetDeployedVersion version:env.VERSION
+                apwChangeStatus status:'Up'
             }
         }
         stage('Release') {
@@ -93,14 +93,14 @@ pipeline {
                 ENV_DATABASE = 'Oracle'
             }
             steps {
-                apwStatusChanged status:'Deploy'
+                apwChangeStatus status:'Deploy'
 
                 withEnv(['JENKINS_NODE_COOKIE=dontKill']) {
                     sh "nohup java -jar -Dserver.port=${env.SERVER_PORT} target/*.jar &"
                 }
                 sh "sleep ${env.SLEEP_TIME}"
 
-                apwEnvironmentUpdated body:[
+                apwUpdateEnvironment body:[
                         url: "http://192.168.0.6:${env.SERVER_PORT}",
                         attributes: [
                                 OS: env.ENV_OS,
@@ -109,8 +109,8 @@ pipeline {
                         ]
                 ]
 
-                apwDeployedVersion version:env.VERSION
-                apwStatusChanged status:'Up'
+                apwSetDeployedVersion version:env.VERSION
+                apwChangeStatus status:'Up'
             }
         }
     }
