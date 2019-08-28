@@ -34,15 +34,70 @@ pipeline {
                 APW_CATEGORY = 'Test2'
                 APW_PERMISSION_SCHEME = 'Default Environment Permission Scheme'
 //                APW_ENVIRONMENT_ID = '6'
+                APW_BUILD_FAIL_ON_ERROR = false
                 SERVER_PORT = 8089
                 ENV_OS = 'Windows'
                 ENV_OWNER = 'info@apwide.com'
                 ENV_DATABASE = 'Oracle'
             }
             steps {
+                apwCreateApplication application: 'Julien', buildFailOnError: false,
+                    applicationSchemeId: 1,
+                    body:[
+                        versionPrefix: 'ECOM',
+                        mappedProjectId: 10100
+                    ]
+
+                apwCreateEnvironmentAndCategory application:'Julien',
+                    category:'Test3',
+                    permissionsScheme:'Default Environment Permission Scheme',
+                    body: [
+                        url: 'http://www.google.fr',
+                        attributes: [
+                            Database: [
+                                    value: 'Oracle'
+                                    ]
+                        ]
+                    ]
+
+
                 script {
-                    apwCreateEnvironment()
+                    def environments_json = apwGetEnvironment application:'Julien', category:'Tewst3'
+                    echo environments_json
                 }
+
+//                apwUpdateApplication application: 'Julien',
+//                        applicationSchemeId: 1,
+//                        body:[
+//                                versionPrefix: 'DADA',
+//                                mappedProjectId: 10100
+//                        ]
+
+//                apwDeleteApplication application: 'Julien'
+
+
+//                apwCreateEnvironmentCategory category: 'Test Cat'
+
+//                apwUpdateEnvironmentCategory category: 'Test Cat', body: [
+//                        order: 200
+//                ]
+
+//                apwDeleteEnvironmentCategory category: 'Test Cat'
+
+//                apwCreateEnvironmentAndCategory application:'eCommerce',
+//                    category:'Test2',
+//                    permissionsScheme:'Default Environment Permission Scheme',
+//                    body: [
+//                        url: 'http://www.google.fr',
+//                        attributes: [
+//                            Database: [
+//                                    value: 'Oracle'
+//                                    ]
+//                        ]
+//                    ]
+
+//                script {
+//                }
 //                    def envs = apwSearchEnvironments criteria:[
 //                            applicationName:'eCommerce',
 //                            statusName:['Up', 'Down'],
