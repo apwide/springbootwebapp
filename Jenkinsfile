@@ -41,30 +41,52 @@ pipeline {
                 ENV_DATABASE = 'Oracle'
             }
             steps {
-                apwCreateApplication application: 'Julien', buildFailOnError: false,
-                    applicationSchemeId: 1,
-                    body:[
-                        versionPrefix: 'ECOM',
-                        mappedProjectId: 10100
-                    ]
+                apwSetEnvironmentStatus status:'Deploy'
 
-                apwCreateEnvironmentAndCategory application:'Julien',
-                    category:'Test3',
-                    permissionsScheme:'Default Environment Permission Scheme',
-                    body: [
-                        url: 'http://www.google.fr',
-                        attributes: [
-                            Database: [
-                                    value: 'Oracle'
-                                    ]
-                        ]
-                    ]
-
-
-                script {
-                    def environments_json = apwGetEnvironment application:'Julien', category:'Tewst3'
-                    echo environments_json
+                // fake example of what could be a deployment step
+                withEnv(['JENKINS_NODE_COOKIE=dontKill']) {
+                    sh "nohup java -jar -Dserver.port=${env.SERVER_PORT} target/*.jar &"
                 }
+                sh "sleep ${env.SLEEP_TIME}"
+
+
+                apwUpdateEnvironment body:[
+                        url: "http://192.168.0.6:${env.SERVER_PORT}",
+                        attributes: [
+                                OS: env.ENV_OS,
+                                Owner: env.ENV_OWNER,
+                                Database: env.ENV_DATABASE,
+                                '# servers': '4'
+                        ]
+                ]
+
+                apwSetDeployedVersion version:env.VERSION
+                apwSetEnvironmentStatus status:'Up'
+
+//                apwCreateApplication application: 'Julien', buildFailOnError: false,
+//                    applicationSchemeId: 1,
+//                    body:[
+//                        versionPrefix: 'ECOM',
+//                        mappedProjectId: 10100
+//                    ]
+//
+//                apwCreateEnvironmentAndCategory application:'Julien',
+//                    category:'Test3',
+//                    permissionsScheme:'Default Environment Permission Scheme',
+//                    body: [
+//                        url: 'http://www.google.fr',
+//                        attributes: [
+//                            Database: [
+//                                    value: 'Oracle'
+//                                    ]
+//                        ]
+//                    ]
+
+
+//                script {
+//                    def environments_json = apwGetEnvironment application:'Julien', category:'Tewst3'
+//                    echo environments_json
+//                }
 
 //                apwUpdateApplication application: 'Julien',
 //                        applicationSchemeId: 1,
@@ -122,25 +144,6 @@ pipeline {
 //                    echo environment.url
 //                }
 //
-//                apwSetEnvironmentStatus status:'Deploy'
-//
-////                withEnv(['JENKINS_NODE_COOKIE=dontKill']) {
-////                    sh "nohup java -jar -Dserver.port=${env.SERVER_PORT} target/*.jar &"
-////                }
-////                sh "sleep ${env.SLEEP_TIME}"
-//
-//                apwUpdateEnvironment body:[
-//                        url: "http://192.168.0.6:${env.SERVER_PORT}",
-//                        attributes: [
-//                                OS: env.ENV_OS,
-//                                Owner: env.ENV_OWNER,
-//                                Database: env.ENV_DATABASE,
-//                                '# servers': '4'
-//                        ]
-//                ]
-//
-//                apwSetDeployedVersion version:env.VERSION
-//                apwSetEnvironmentStatus status:'Up'
             }
         }
         stage('Release') {
